@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.learning.composablechatapp.AppUi.ChatListsScreen
+import com.learning.composablechatapp.AppUi.PersonalChatScreenComponents.PersonalChatScreenViewModel
 import com.learning.composablechatapp.AppUi.PersonalChatsScreen
 
 
@@ -25,7 +26,7 @@ fun NavGraph(
         composable(
             route=Screen.PersonalChatsScreen.route
         ) {
-            PersonalChatsScreen(navHost)
+            PersonalChatsScreen(PersonalChatScreenViewModel(),navHost)
         }
         }
 

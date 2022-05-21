@@ -10,7 +10,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 
 @Composable
-fun AppBottomBar(
+fun PersonalChatBottomBar(
+    OnButtonClick: (arg: String) -> Unit
 ) {
     var BottomText = rememberSaveable { mutableStateOf("") }
     BottomAppBar() {
@@ -25,7 +26,10 @@ fun AppBottomBar(
 
             )
 
-            Button(onClick = { }) {
+            Button(onClick = {
+                OnButtonClick(BottomText.value)
+                BottomText.value=""
+            }) {
                 Icon(Icons.Default.Send, contentDescription = null)
             }
 

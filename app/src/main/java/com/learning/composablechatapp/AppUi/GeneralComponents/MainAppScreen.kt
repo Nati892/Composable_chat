@@ -18,17 +18,9 @@ fun App() {
         val navController = rememberNavController()
 
         Scaffold(
-            bottomBar = { AppBottomBar() }
 
-        ) { inner ->
-            Box(
-                modifier = Modifier.padding(
-                    paddingValues = PaddingValues(0.dp, 0.dp, 0.dp, inner.calculateBottomPadding())
-                )
-            ) {
-                NavGraph(navHost = navController)
-            }
-
+        ) {
+            NavGraph(navHost = navController)
         }
 
     }
