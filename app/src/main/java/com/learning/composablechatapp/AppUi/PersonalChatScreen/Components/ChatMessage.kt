@@ -2,22 +2,29 @@ package com.learning.composablechatapp.AppUi
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.learning.composablechatapp.data.Repos.MessageData
 
 @Composable
 fun ChatMessage(
-    MessageText: String,
-    recieved: Boolean = false,//determines horizontal position of message
+    MessageData: MessageData,
 ) {
 
+        Row() {
+            if (MessageData.SenderId != 0)
+            Spacer(modifier = Modifier.weight(1f))
+            Column(
 
-    Column() {
-        Text(text = "$MessageText", Modifier.background(Color.Cyan))
+            ) {
+                Text(text = "${MessageData.MessageText}", Modifier.background(Color.Cyan))
+            }
+        }
 
-    }
 }
 
 

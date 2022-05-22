@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,9 +26,12 @@ fun PersonalChatsScreen(
     Scaffold(
         bottomBar = {
             PersonalChatBottomBar { arg ->
-                viewModel.add(MessageData(arg,0))
+                viewModel.add(MessageData(arg, 0))
             }
-        }
+        },
+        topBar = { TopAppBar(title = { Text(text = viewModel.params.contact) }) }
+
+
     ) { inner ->
         Box(
             modifier = Modifier.padding(
@@ -39,7 +43,7 @@ fun PersonalChatsScreen(
             ) {
                 item { Text(text = viewModel.params.contact) }
                 items(viewModel.state) {
-                    ChatMessage(it.MessageText);
+                    ChatMessage(it);
                 }
             }
         }
