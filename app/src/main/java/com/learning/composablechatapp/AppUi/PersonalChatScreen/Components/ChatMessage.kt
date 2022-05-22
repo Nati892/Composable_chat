@@ -31,6 +31,7 @@ fun ChatMessage(
                 .clip(RoundedCornerShape(topEnd = 16.dp))
         ) {
             Text(
+                modifier = Modifier.padding(horizontal = 3.dp),
                 text = "${MessageData.MessageText}",
                 textAlign = if (MessageData.SenderId != 0) TextAlign.Right else TextAlign.Left
             )

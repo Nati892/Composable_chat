@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -17,6 +20,7 @@ import com.learning.composablechatapp.AppUi.GeneralComponents.PersonalChatBottom
 import com.learning.composablechatapp.AppUi.PersonalChatScreen.Components.ChatScreenTopBar
 import com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState.PersonalChatScreenViewModel
 import com.learning.composablechatapp.data.Repos.MessageData
+import kotlinx.coroutines.launch
 
 @Composable
 fun PersonalChatsScreen(
@@ -24,10 +28,17 @@ fun PersonalChatsScreen(
     navHost: NavHostController,
 ) {
 
+    var listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
     Scaffold(
         bottomBar = {
             PersonalChatBottomBar { arg ->
                 viewModel.add(MessageData(arg, 0))
+
+                coroutineScope.launch {
+                    listState.scrollToItem(viewModel.state.size - 1)
+                }
+
             }
         },
         topBar = { ChatScreenTopBar(contantName = viewModel.params.contact) }
@@ -39,7 +50,8 @@ fun PersonalChatsScreen(
             )
         ) {
             LazyColumn(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                state = listState
             ) {
                 items(viewModel.state) {
                     ChatMessage(it);
