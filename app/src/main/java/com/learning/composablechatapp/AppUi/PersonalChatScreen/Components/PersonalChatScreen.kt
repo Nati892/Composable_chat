@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.learning.composablechatapp.AppUi.GeneralComponents.PersonalChatBottomBar
+import com.learning.composablechatapp.AppUi.PersonalChatScreen.Components.ChatScreenTopBar
 import com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState.PersonalChatScreenViewModel
 import com.learning.composablechatapp.data.Repos.MessageData
 
@@ -29,8 +30,7 @@ fun PersonalChatsScreen(
                 viewModel.add(MessageData(arg, 0))
             }
         },
-        topBar = { TopAppBar(title = { Text(text = viewModel.params.contact) }) }
-
+        topBar = { ChatScreenTopBar(contantName = viewModel.params.contact) }
 
     ) { inner ->
         Box(
@@ -41,7 +41,6 @@ fun PersonalChatsScreen(
             LazyColumn(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                item { Text(text = viewModel.params.contact) }
                 items(viewModel.state) {
                     ChatMessage(it);
                 }
