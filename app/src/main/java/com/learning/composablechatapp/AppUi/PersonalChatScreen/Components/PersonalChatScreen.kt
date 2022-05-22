@@ -9,33 +9,23 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.learning.composablechatapp.AppUi.GeneralComponents.PersonalChatBottomBar
-import com.learning.composablechatapp.AppUi.PersonalChatScreenComponents.PersonalChatScreenViewModel
-import com.learning.composablechatapp.Repos.MessageData
+import com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState.PersonalChatScreenViewModel
+import com.learning.composablechatapp.data.Repos.MessageData
 
 @Composable
 fun PersonalChatsScreen(
     viewModel: PersonalChatScreenViewModel,
     navHost: NavHostController,
 ) {
-    val state = viewModel.state
-
-
-
-
 
     Scaffold(
         bottomBar = {
             PersonalChatBottomBar { arg ->
-                //state.value.Messages.add(MessageData(arg,0))
-                state.value.isLoading=!state.value.isLoading
-
+                viewModel.add(MessageData(arg,0))
             }
         }
     ) { inner ->
@@ -47,15 +37,11 @@ fun PersonalChatsScreen(
             LazyColumn(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                item { Text(text = state.value.isLoading.toString()) }
-                items(items = state.value.Messages) {
+                item { Text(text = viewModel.params.contact) }
+                items(viewModel.state) {
                     ChatMessage(it.MessageText);
                 }
-
-
             }
         }
-
     }
-
 }

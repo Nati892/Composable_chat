@@ -1,4 +1,4 @@
-package com.learning.composablechatapp.Repos
+package com.learning.composablechatapp.data.Repos
 
 class FakeMessagesRepo() {
     val list: ArrayList<MessageData> = arrayListOf();
