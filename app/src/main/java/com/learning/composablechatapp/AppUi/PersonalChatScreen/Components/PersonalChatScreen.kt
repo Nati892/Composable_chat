@@ -7,36 +7,42 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.learning.composablechatapp.AppUi.GeneralComponents.PersonalChatBottomBar
 import com.learning.composablechatapp.AppUi.PersonalChatScreen.Components.ChatScreenTopBar
+import com.learning.composablechatapp.AppUi.PersonalChatScreen.Components.DownActionButton
 import com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState.PersonalChatScreenViewModel
-import com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState.rememberChatScreenState
 import com.learning.composablechatapp.data.Repos.MessageData
-import kotlinx.coroutines.launch
 
 @Composable
 fun PersonalChatsScreen(
     viewModel: PersonalChatScreenViewModel,
     navHost: NavHostController,
 ) {
-    val States= rememberChatScreenState()
+    var States = viewModel.AppState
+    val endReached by remember {
+        derivedStateOf {
+            (States.LazyColumnState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == States.LazyColumnState.layoutInfo.totalItemsCount - 1)
+        }
+    }
+    if (endReached) {
+        LaunchedEffect(Unit) {
+            States.showMoreMessageButton.value = false
+        }
+    }
 
     Scaffold(
         bottomBar = {
             PersonalChatBottomBar { arg ->
                 viewModel.add(MessageData(arg, 0))
-
-                States.coroutineScope.launch {
-                    States.LazyColumnState.scrollToItem(viewModel.state.size - 1)
-                }
-
+                viewModel.scrollMessagesToEnd()
             }
         },
-        topBar = { ChatScreenTopBar(contantName = viewModel.params.contact) }
+        topBar = { ChatScreenTopBar(contantName = viewModel.params.contact) },
+        floatingActionButton = { DownActionButton(viewModel = viewModel) }
 
     ) { inner ->
         Box(
@@ -55,3 +61,4 @@ fun PersonalChatsScreen(
         }
     }
 }
+

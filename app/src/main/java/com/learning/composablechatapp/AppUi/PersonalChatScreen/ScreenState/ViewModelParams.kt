@@ -1,3 +1,3 @@
 package com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState
 
-data class ViewModelParams (val contact:String)
+data class ViewModelParams (val contact:String,val screenState: ScreenState)

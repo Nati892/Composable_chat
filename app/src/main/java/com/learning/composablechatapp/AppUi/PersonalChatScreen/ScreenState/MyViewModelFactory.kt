@@ -8,5 +8,5 @@ class MyViewModelFactory(
 ) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        PersonalChatScreenViewModel(dbname) as T
+        PersonalChatScreenViewModel(dbname,dbname.screenState) as T
 }

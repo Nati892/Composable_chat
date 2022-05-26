@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.learning.composablechatapp.AppUi.ChatListsScreen
 import com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState.MyViewModelFactory
 import com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState.ViewModelParams
+import com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState.rememberChatScreenState
 import com.learning.composablechatapp.AppUi.PersonalChatsScreen
 
 
@@ -28,7 +29,8 @@ fun NavGraph(
         composable(
             route=Screen.PersonalChatsScreen.route
         ) {
-            PersonalChatsScreen(viewModel = viewModel(factory = MyViewModelFactory(ViewModelParams("chatname"))),navHost= navHost)
+            var screenState= rememberChatScreenState()
+            PersonalChatsScreen(viewModel = viewModel(factory = MyViewModelFactory(ViewModelParams("chatname",screenState))),navHost= navHost)
         }
         }
 

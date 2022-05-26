@@ -1,5 +1,8 @@
 package com.learning.composablechatapp.data.Repos
 
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
+
 class FakeMessagesRepo() {
     val list: ArrayList<MessageData> = arrayListOf();
     fun getTextMessages(): List<MessageData> {
@@ -21,6 +24,20 @@ class FakeMessagesRepo() {
 
         }
         return list;
+    }
+
+    val FakeRecievedMessage = flow<MessageData> {
+        var FakeMessageList = listOf<MessageData>(
+            MessageData("I need to hack facebook", 1),
+            MessageData("do you bitcoin much?", 1),
+            MessageData("Can you fix my printer?", 1)
+        )
+        var i = 0;
+        while (true) {
+            delay(4000L)
+            emit(FakeMessageList[i%FakeMessageList.size])
+            i++;
+        }
     }
 
 
