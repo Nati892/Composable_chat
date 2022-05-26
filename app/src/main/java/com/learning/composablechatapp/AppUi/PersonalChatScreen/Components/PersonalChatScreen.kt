@@ -16,7 +16,7 @@ import com.learning.composablechatapp.AppUi.PersonalChatScreen.Components.ChatSc
 import com.learning.composablechatapp.AppUi.PersonalChatScreen.Components.DownActionButton
 import com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState.PersonalChatScreenViewModel
 import com.learning.composablechatapp.data.Repos.MessageData
-
+ 
 @Composable
 fun PersonalChatsScreen(
     viewModel: PersonalChatScreenViewModel,
