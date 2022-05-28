@@ -10,9 +10,7 @@ import com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState.Perso
 @Composable
 fun DownActionButton(viewModel: PersonalChatScreenViewModel){
     //if not in end and there are items that are not observed
-        if (viewModel.AppState.showMoreMessageButton.value && viewModel.AppState.LazyColumnState.layoutInfo.visibleItemsInfo.lastOrNull()?.index != viewModel.AppState.LazyColumnState.layoutInfo.totalItemsCount - 1) {
-            FloatingActionButton(onClick = { viewModel.scrollMessagesToEnd() }) {
+            FloatingActionButton(onClick = { viewModel.scrollMessagesToEnd() }){
                 Icon(Icons.Default.KeyboardArrowDown, contentDescription = null)
-            }}
-
+            }
 }

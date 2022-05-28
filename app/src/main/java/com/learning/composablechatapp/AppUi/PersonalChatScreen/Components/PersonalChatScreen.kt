@@ -42,7 +42,11 @@ fun PersonalChatsScreen(
             }
         },
         topBar = { ChatScreenTopBar(contantName = viewModel.params.contact) },
-        floatingActionButton = { DownActionButton(viewModel = viewModel) }
+        floatingActionButton = {
+            if (States.showMoreMessageButton.value) {
+                DownActionButton(viewModel = viewModel)
+            }
+        }
 
     ) { inner ->
         Box(
