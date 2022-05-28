@@ -1,7 +1,6 @@
 package com.learning.composablechatapp.AppUi.PersonalChatScreen.ScreenState
 
 import android.util.Log
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,7 +20,7 @@ class PersonalChatScreenViewModel constructor(
 
 
     init {
-        collectMessages()
+        InitialLoadMessages()
         ReciveMessages()
     }
 
@@ -41,11 +40,14 @@ class PersonalChatScreenViewModel constructor(
         }
     }
 
-    private fun collectMessages() {
+    private fun InitialLoadMessages() {
         viewModelScope.launch {
-            delay(1L)
+            while (MessagesFlow == null){
+                delay(1L)
+                Log.d("TAG", "InitialLoadMessages: delaying")}
             MessagesFlow.collect {
                 add(it)
+
             }
         }
     }
@@ -53,19 +55,19 @@ class PersonalChatScreenViewModel constructor(
 
     private fun ReciveMessages() {
         viewModelScope.launch {
-            delay(1L)
-            Log.d("TAG", "collectMessages: coroutine start")
             FakeMessagesRepo().FakeRecievedMessage.collect {
-                add(it)
-                shouldScrollToEndOfScreen()
+                if (it != null) {
+                    add(it)
+                    NotifyUserNewMessages()
+                }
             }
         }
     }
 
-    fun shouldScrollToEndOfScreen() {
+    fun NotifyUserNewMessages() {
         if (state.size > 0)
             viewModelScope.launch {
-                if (AppState.LazyColumnState.layoutInfo.visibleItemsInfo.lastOrNull()?.index!! <= AppState.LazyColumnState.layoutInfo.totalItemsCount-4)
+                if (AppState.LazyColumnState.layoutInfo.visibleItemsInfo.lastOrNull()?.index!! <= AppState.LazyColumnState.layoutInfo.totalItemsCount - 4)
                     AppState.showMoreMessageButton.value = true;
                 else
                     scrollMessagesToEnd()
